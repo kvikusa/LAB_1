@@ -2,20 +2,22 @@
 
 public class Program
 {
-    public int x, y, z;
-    public char str;
-    public string? ned;
-    public int[] arr;
+    int x, y, z;
+    char str;
+    string? ned;
+    int[] arr;
+    bool prov;
+
+    //МЕТОДЫ
     public int sumLastNums(int x)
     {
-        return x % 10 + (x / 10) % 10;
+        int a = Math.Abs(x);
+        return a % 10 + (a / 10) % 10;
     }
-
     public bool isPositive(int x)
     {
         return x > 0; //возвратит true, если число положительное
     }
-
     public bool isDivisor(int a, int b)
     {
         return ((a % b) == 0 || (b % a) == 0); //возвратит true, если числа делятся друг на друга целочисленно
@@ -34,7 +36,7 @@ public class Program
         if (a > 9 & b < 10)
         {
             int c = a % 10;
-            return c + b; 
+            return c + b;
         }
         if (a > 9 & b > 9)
         {
@@ -44,6 +46,7 @@ public class Program
         }
         return a + b;
     }
+    //УСЛОВИЯ
     public double safeDiv(int x, int y)
     {
         if (y > 0) return (double)x / y;
@@ -62,8 +65,6 @@ public class Program
         if (z + y == x) return true;
         return false;
     }
-
-
     public String age(int x)
     {
         int d = x % 10;
@@ -123,16 +124,16 @@ public class Program
                 break;
         }
     }
-
+    //ЦИКЛЫ
     public String reverseListNums(int x)
+    {
+        string[] num = new string[x + 1]; //создали массив для добавления в строку чисел
+        for (int i = 0; i <= x; i++)
         {
-            string[] num = new string[x + 1]; //создали массив для добавления в строку чисел
-            for (int i = 0; i <= x; i++)
-            {
-                num[i] = (x - i).ToString(); //добавляем числа в строку
-            }
-            return string.Join(" ", num);
+            num[i] = (x - i).ToString(); //добавляем числа в строку
         }
+        return string.Join(" ", num);
+    }
     public int pow(int x, int y)
     {
         int b = 1;
@@ -225,81 +226,137 @@ public class Program
         var res = new Program();
         Console.Write("Введите номер задачи (от 1 до 20) -> ");
         int m = Convert.ToInt32(Console.ReadLine());
+        while (!Enumerable.Range(1, 100).Contains(m))
+        {
+            Console.Write("Ошибка ввода! Нужно ввести число от 1 до 20 ->");
+            m = Convert.ToInt32(Console.ReadLine());
+        }
         //МЕТОДЫ
         if (m == 1)
         {
             Console.Write("Введите число не менее двух знаков -> ");
             res.x = Convert.ToInt32(Console.ReadLine());
+            int k = Math.Abs(res.x);
+            while (k < 10)
+            {
+                Console.Write("Введите число не менее двух знаков -> ");
+                res.x = Convert.ToInt32(Console.ReadLine());
+                k = Math.Abs(res.x);
+            }
             Console.WriteLine("Сумма двух последних знаков числа {0} равна {1}", res.x, res.sumLastNums(res.x));
         }
         if (m == 2)
         {
             Console.Write("Введите число -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine(res.isPositive(res.x));
         }
         if (m == 3)
         {
             Console.Write("Введите букву -> ");
-            res.str = Console.ReadLine()[0]; 
+            res.str = Console.ReadLine()[0];
             Console.WriteLine(res.isUpperCase(res.str));
         }
         if (m == 4)
         {
             Console.Write("Введите число a -> ");
             res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число b -> ");
             res.y = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(res.isDivisor(res.x,res.y));
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
+            Console.WriteLine(res.isDivisor(res.x, res.y));
         }
         if (m == 5)
         {
             int i = 0;
             Console.Write("Введите число a -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             while (i < 4)
             {
                 Console.Write("Введите число b -> ");
-                res.y = Convert.ToInt32(Console.ReadLine());
+                while (!int.TryParse(Console.ReadLine(), out res.y))
+                {
+                    Console.WriteLine("Ошибка ввода! Введите число -> ");
+                }
                 i++;
                 Console.WriteLine("{0} + {1} это " + res.lastNumSum(res.x, res.y), res.x, res.y);
                 res.x = res.lastNumSum(res.x, res.y);
             }
             Console.Write("Введите число b -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine("Итого: " + res.lastNumSum(res.x, res.y));
         }
         //УСЛОВИЯ
         if (m == 6)
         {
             Console.Write("Введите число х (делимое) -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число у (делитель) -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine("результат: " + res.safeDiv(res.x, res.y));
         }
         if (m == 7)
         {
             Console.Write("Введите число х -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число у -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine("результат: " + res.x + res.makeDecision(res.x, res.y) + res.y);
         }
         if (m == 8)
         {
             Console.Write("Введите число х -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число у -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число z -> ");
-            res.z = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.z))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine("результат: " + res.sum3(res.x, res.y, res.z));
         }
         if (m == 9)
         {
             Console.Write("Введите число х -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine("результат: " + res.x + res.age(res.x));
         }
         if (m == 10)
@@ -312,27 +369,42 @@ public class Program
         if (m == 11)
         {
             Console.Write("Введите число -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write(res.reverseListNums(res.x));
         }
         if (m == 12)
         {
             Console.Write("Введите число х -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите число у -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write(res.pow(res.x, res.y));
         }
         if (m == 13)
         {
             Console.Write("Введите число -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write(res.equalNum(res.x));
         }
         if (m == 14)
         {
             Console.Write("Введите высоту треугольника -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             res.leftTriangle(res.x);
         }
         if (m == 15)
@@ -343,7 +415,10 @@ public class Program
         if (m == 16)
         {
             Console.Write("Введите кол-во чисел в массиве -> ");
-            res.x = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Random random = new Random();
             int[] arr = new int[res.x];
             for (int i = 0; i < res.x; i++)
@@ -353,13 +428,19 @@ public class Program
             for (int i = 0; i < res.x; i++) { Console.Write(arr[i] + " "); }
             Console.WriteLine();
             Console.Write("Введите число -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.WriteLine(res.findLast(arr, res.y));
         }
         if (m == 17)
         {
             Console.Write("Введите кол-во чисел в массиве -> ");
-            res.x = Convert.ToInt32(Console.ReadLine()); //кол-во чисел в массиве
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            } //кол-во чисел в массиве
             Random random = new Random();
             int[] arr = new int[res.x];
             for (int i = 0; i < res.x; i++) //заполнение массива рандоиными чмслами в диапазоне от 1 до 10
@@ -369,16 +450,25 @@ public class Program
             for (int i = 0; i < res.x; i++) { Console.Write(arr[i] + " "); }// вывод массива
             Console.WriteLine();
             Console.Write("Введите число, которое хотите вставить в массив -> ");
-            res.z = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.z))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             Console.Write("Введите позицию в массиве куда вставить число -> ");
-            res.y = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            }
             int[] new_arr = res.add(arr, res.z, res.y);
             Console.WriteLine(string.Join(" ", new_arr));//обЪединяем массив в строку и выводим через пробел
         }
         if (m == 18)
         {
             Console.Write("Введите кол-во чисел в массиве -> ");
-            res.x = Convert.ToInt32(Console.ReadLine()); //кол-во чисел в массиве
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            } //кол-во чисел в массиве
             Random random = new Random();
             int[] arr = new int[res.x];
             for (int i = 0; i < res.x; i++) //заполнение массива
@@ -392,9 +482,15 @@ public class Program
         if (m == 19)
         {
             Console.Write("Введите кол-во чисел в первом массиве -> ");
-            res.x = Convert.ToInt32(Console.ReadLine()); //кол-во чисел в массиве
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            } //кол-во чисел в массиве
             Console.Write("Введите кол-во чисел во втором массиве -> ");
-            res.y = Convert.ToInt32(Console.ReadLine()); //кол-во чисел в массиве
+            while (!int.TryParse(Console.ReadLine(), out res.y))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            } //кол-во чисел в массиве
             Random random = new Random();
             int[] arr1 = new int[res.x];
             int[] arr2 = new int[res.y];
@@ -416,7 +512,10 @@ public class Program
         if (m == 20)
         {
             Console.Write("Введите кол-во чисел в массиве -> ");
-            res.x = Convert.ToInt32(Console.ReadLine()); //кол-во чисел в массиве
+            while (!int.TryParse(Console.ReadLine(), out res.x))
+            {
+                Console.WriteLine("Ошибка ввода! Введите число -> ");
+            } //кол-во чисел в массиве
             Random random = new Random();
             int[] arr1 = new int[res.x];
             for (int i = 0; i < res.x; i++) //заполнение массива
